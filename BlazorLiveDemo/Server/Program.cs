@@ -1,10 +1,18 @@
+using BlazorLiveDemo.Server.DataAccess;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<PeopleContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("PeopleDb");
+    options.UseSqlServer(connectionString);
+});
 
 var app = builder.Build();
 

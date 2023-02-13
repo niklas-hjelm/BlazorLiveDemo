@@ -1,0 +1,56 @@
+﻿@page "/demo"
+@using BlazorLiveDemo.Shared
+
+<h3>Demo</h3>
+
+@*@{
+    for (int i = 0; i < 10; i++)
+    {
+        if (i %2 == 0)
+        {
+            <h3 class="fw-bolder text-primary">Blaj @i</h3>
+        }
+        else
+        {
+            <h3 class="fw-bolder text-danger">Blaj @i</h3>
+        }
+    }
+}*@
+
+<button class="btn btn-info" @onclick="OnClicked">Click Me! </button>
+<h1>@counter</h1>
+
+<Virtualize Items="Names" Context="name">
+    <h3>@name</h3>
+</Virtualize>
+
+<EditForm Model="CurrentPerson" OnSubmit="SavePerson">
+    <InputText @bind-Value="CurrentPerson.Name"></InputText>
+    <InputNumber @bind-Value="CurrentPerson.Age"></InputNumber>
+    <button class="btn btn-secondary">Save</button>
+</EditForm>
+
+<Virtualize Items="People" Context="person">
+    <h3>@person.Name @person.Age</h3>
+</Virtualize>
+
+@code {
+    int counter;
+
+    List<string> Names { get; set; } = new () {"Peter", "Casandra", "Anna"};
+
+    List<Person> People { get; set; } = new();
+    Person CurrentPerson { get; set; } = new ("", 0);
+
+    private void OnClicked()
+    {
+        counter++;
+    }
+
+    private void SavePerson()
+    {
+        People.Add(CurrentPerson);
+        CurrentPerson = new Person("", 0);
+    }
+
+}

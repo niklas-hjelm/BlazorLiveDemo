@@ -1,5 +1,5 @@
 using BlazorLiveDemo.Server.DataAccess;
-using Microsoft.AspNetCore.ResponseCompression;
+using BlazorLiveDemo.Shared;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +13,8 @@ builder.Services.AddDbContext<PeopleContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("PeopleDb");
     options.UseSqlServer(connectionString);
 });
+
+builder.Services.AddScoped<PeopleRepository>();
 
 var app = builder.Build();
 
@@ -35,9 +37,21 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
 app.MapRazorPages();
 
 app.MapFallbackToFile("index.html");
+
+
+app.MapGet("/allPeople", (PeopleRepository repo) =>
+{
+    return Results.Ok(repo.GetAllPeople());
+});
+
+app.MapPost("/addPerson", (PeopleRepository repo, Person person) =>
+{
+    repo.Add(person);
+    return Results.Ok("Added person");
+});
+
 
 app.Run();

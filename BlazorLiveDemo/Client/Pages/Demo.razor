@@ -1,6 +1,8 @@
 ﻿@page "/demo"
 @using BlazorLiveDemo.Shared
 
+@inject HttpClient _client;
+
 <h3>Demo</h3>
 
 @*@{
@@ -30,7 +32,7 @@
     <button class="btn btn-secondary">Save</button>
 </EditForm>
 
-<Virtualize Items="People" Context="person">
+<Virtualize Items="People.OrderBy(p=>p.Age).ToList()" Context="person">
     <h3>@person.Name @person.Age</h3>
 </Virtualize>
 
@@ -47,9 +49,11 @@
         counter++;
     }
 
-    private void SavePerson()
+    private async Task SavePerson()
     {
-        People.Add(CurrentPerson);
+        await _client.PostAsJsonAsync<Person>("addPerson",CurrentPerson);
+        var response = await _client.GetFromJsonAsync<IEnumerable<Person>>("allPeople");
+        People = response.ToList();
         CurrentPerson = new Person("", 0);
     }
 

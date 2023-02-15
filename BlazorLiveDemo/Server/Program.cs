@@ -15,7 +15,8 @@ builder.Services.AddDbContext<PeopleContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddScoped<PeopleRepository>();
+builder.Services.AddScoped<IRepository<PersonDto>,PeopleRepository>();
+builder.Services.AddScoped<IRepository<ChatMessageDto>,ChatRepository>();
 
 builder.Services.AddSignalR();
 
@@ -42,14 +43,14 @@ app.UseRouting();
 
 app.MapRazorPages();
 
-app.MapGet("/allPeople", (PeopleRepository repo) =>
+app.MapGet("/allPeople", async (IRepository<PersonDto> repo) =>
 {
-    return Results.Ok(repo.GetAllPeople());
+    return Results.Ok(await repo.GetAllAsync());
 });
 
-app.MapPost("/addPerson", (PeopleRepository repo, PersonDto person) =>
+app.MapPost("/addPerson", async (IRepository<PersonDto> repo, PersonDto person) =>
 {
-    repo.Add(person);
+    await repo.AddAsync(person);
     return Results.Ok("Added person");
 });
 

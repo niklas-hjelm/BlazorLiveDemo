@@ -1,9 +1,9 @@
 ﻿namespace BlazorLiveDemo.Shared;
-public record Person
+public record PersonDto
 {
     public string Name { get; set; }
     public int Age { get; set; }
-    public Person(string name, int age)
+    public PersonDto(string name, int age)
     {
         Name = name;
         Age = age;

@@ -11,7 +11,7 @@ public class PeopleRepository
     {
         _context = context;
     }
-    public void Add(Person newPerson)
+    public void Add(PersonDto newPerson)
     {
         var names = newPerson.Name.Split(' ');
 
@@ -23,11 +23,11 @@ public class PeopleRepository
         _context.SaveChanges();
     }
 
-    public IEnumerable<Person> GetAllPeople()
+    public IEnumerable<PersonDto> GetAllPeople()
     {
         return _context.People
             .Select(pm => 
-                new Person($"{pm.FirstName} {pm.LastName}", pm.Age)
+                new PersonDto($"{pm.FirstName} {pm.LastName}", pm.Age)
             );
     }
 }

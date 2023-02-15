@@ -23,26 +23,3 @@
         <div class="card-body">@person.Age</div>
     </div>
 </Virtualize>
-
-@code {
-    int counter;
-
-    List<string> Names { get; set; } = new () {"Peter", "Casandra", "Anna"};
-
-    List<Person> People { get; set; } = new();
-    Person CurrentPerson { get; set; } = new ("", 0);
-
-    private void OnClicked()
-    {
-        counter++;
-    }
-
-    private async Task SavePerson()
-    {
-        await _client.PostAsJsonAsync<Person>("addPerson",CurrentPerson);
-        var response = await _client.GetFromJsonAsync<IEnumerable<Person>>("allPeople");
-        People = response.ToList();
-        CurrentPerson = new Person("", 0);
-    }
-
-}

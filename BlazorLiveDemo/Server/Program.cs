@@ -47,7 +47,7 @@ app.MapGet("/allPeople", (PeopleRepository repo) =>
     return Results.Ok(repo.GetAllPeople());
 });
 
-app.MapPost("/addPerson", (PeopleRepository repo, Person person) =>
+app.MapPost("/addPerson", (PeopleRepository repo, PersonDto person) =>
 {
     repo.Add(person);
     return Results.Ok("Added person");

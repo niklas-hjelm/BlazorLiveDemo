@@ -54,6 +54,11 @@ app.MapPost("/addPerson", async (IRepository<PersonDto> repo, PersonDto person) 
     return Results.Ok("Added person");
 });
 
+app.MapGet("/getAllChat", async (IRepository<ChatMessageDto> repo) =>
+{
+    return Results.Ok(await repo.GetAllAsync());
+});
+
 app.MapHub<ChatHub>("/hubs/ChatHub");
 
 app.MapFallbackToFile("index.html");

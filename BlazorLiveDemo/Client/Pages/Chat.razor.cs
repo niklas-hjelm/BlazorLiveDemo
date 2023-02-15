@@ -1,4 +1,5 @@
-﻿using BlazorLiveDemo.Shared;
+﻿using System.Net.Http.Json;
+using BlazorLiveDemo.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -7,14 +8,14 @@ namespace BlazorLiveDemo.Client.Pages;
 public partial class Chat : ComponentBase
 {
     ChatMessageDto CurrentMessage { get; set; }
-    List<ChatMessageDto> AllMessages { get; set; }
+    List<ChatMessageDto> AllMessages { get; set; } = new();
 
     HubConnection _chatConnection;
 
     protected override async Task OnInitializedAsync()
     {
         CurrentMessage = new ChatMessageDto();
-        AllMessages = new List<ChatMessageDto>();
+        AllMessages = await _client.GetFromJsonAsync<List<ChatMessageDto>>(_client.BaseAddress + "getAllChat");
 
         _chatConnection = new HubConnectionBuilder()
             .WithUrl(_navigationManager.BaseUri + "hubs/ChatHub")

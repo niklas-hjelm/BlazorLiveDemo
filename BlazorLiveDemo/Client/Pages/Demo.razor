@@ -4,21 +4,6 @@
 @inject HttpClient _client;
 
 <h3>Demo</h3>
-
-@*@{
-    for (int i = 0; i < 10; i++)
-    {
-        if (i %2 == 0)
-        {
-            <h3 class="fw-bolder text-primary">Blaj @i</h3>
-        }
-        else
-        {
-            <h3 class="fw-bolder text-danger">Blaj @i</h3>
-        }
-    }
-}*@
-
 <button class="btn btn-info" @onclick="OnClicked">Click Me! </button>
 <h1>@counter</h1>
 
@@ -33,7 +18,10 @@
 </EditForm>
 
 <Virtualize Items="People.OrderBy(p=>p.Age).ToList()" Context="person">
-    <h3>@person.Name @person.Age</h3>
+    <div class="card">
+        <div class="card-header">@person.Name</div>
+        <div class="card-body">@person.Age</div>
+    </div>
 </Virtualize>
 
 @code {

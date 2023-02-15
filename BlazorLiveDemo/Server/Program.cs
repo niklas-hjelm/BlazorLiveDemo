@@ -1,4 +1,5 @@
 using BlazorLiveDemo.Server.DataAccess;
+using BlazorLiveDemo.Server.Hubs;
 using BlazorLiveDemo.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<PeopleContext>(options =>
 });
 
 builder.Services.AddScoped<PeopleRepository>();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -39,9 +42,6 @@ app.UseRouting();
 
 app.MapRazorPages();
 
-app.MapFallbackToFile("index.html");
-
-
 app.MapGet("/allPeople", (PeopleRepository repo) =>
 {
     return Results.Ok(repo.GetAllPeople());
@@ -53,5 +53,8 @@ app.MapPost("/addPerson", (PeopleRepository repo, PersonDto person) =>
     return Results.Ok("Added person");
 });
 
+app.MapHub<ChatHub>("/hubs/ChatHub");
+
+app.MapFallbackToFile("index.html");
 
 app.Run();

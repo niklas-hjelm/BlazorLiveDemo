@@ -1,5 +1,7 @@
 ﻿@page "/chat"
-@using BlazorLiveDemo.Shared
+
+@inject NavigationManager _navigationManager
+
 <h3>Chat</h3>
 
 <EditForm Model="CurrentMessage" OnSubmit="SendMessage">
@@ -14,8 +16,10 @@
     <button class="btn btn-primary mt-2">Send</button>
 </EditForm>
 
+<hr class="mt-1 mb-1"/>
+
 <ul class="container">
-    <Virtualize Items="AllMessages" Context="message">
+    <Virtualize Items="AllMessages.OrderByDescending(m=>m.TimeSent).ToList()" Context="message">
         <li class="col card border-2">
             <label class="card-header bg-dark text-info text-start">@message.Name</label>
             <p class="card-body mb-0 bg-secondary text-warning text-center">@message.Message</p>
@@ -23,24 +27,3 @@
         </li>
     </Virtualize>
 </ul>
-
-@code {
-    ChatMessageDto CurrentMessage { get; set; }
-    List<ChatMessageDto> AllMessages { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        CurrentMessage = new ChatMessageDto();
-        AllMessages = new List<ChatMessageDto>();
-
-        await base.OnInitializedAsync();
-    }
-
-    private void SendMessage()
-    {
-        CurrentMessage.TimeSent = DateTime.Now;
-        AllMessages.Add(CurrentMessage);
-        CurrentMessage = new ChatMessageDto();
-    }
-
-}

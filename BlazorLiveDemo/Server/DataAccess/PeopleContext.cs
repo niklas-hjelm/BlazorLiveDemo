@@ -7,6 +7,8 @@ public class PeopleContext : DbContext
 {
     public DbSet<PersonModel> People { get; set; }
 
+    public DbSet<UserModel> Users { get; set; }
+
     public PeopleContext(DbContextOptions options) : base(options)
     {
         

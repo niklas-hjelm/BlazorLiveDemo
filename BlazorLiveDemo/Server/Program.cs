@@ -1,5 +1,7 @@
 using BlazorLiveDemo.Server.DataAccess;
 using BlazorLiveDemo.Server.Hubs;
+using BlazorLiveDemo.Server.Services;
+using BlazorLiveDemo.Server.Services.Interfaces;
 using BlazorLiveDemo.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +19,7 @@ builder.Services.AddDbContext<PeopleContext>(options =>
 
 builder.Services.AddScoped<IRepository<PersonDto>,PeopleRepository>();
 builder.Services.AddScoped<IRepository<ChatMessageDto>,ChatRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddSignalR();
 

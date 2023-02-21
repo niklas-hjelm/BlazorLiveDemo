@@ -29,10 +29,15 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\Chat.razor" />
+    <_ContentIncludedByDefault Remove="Shared\USerButtons.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\USerButtons.razor" />
   </ItemGroup>
 
 </Project>

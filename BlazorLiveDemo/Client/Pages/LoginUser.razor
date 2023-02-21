@@ -1,0 +1,53 @@
+﻿@page "/login"
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components
+@using BlazorLiveDemo.Client.Services.Interfaces
+@using BlazorLiveDemo.Shared.DTOs
+@inject IAuthService _authService
+@inject ISessionStorageService _sessionStorage
+@inject NavigationManager _navigationManager
+@inject AuthenticationStateProvider _authenticationStateProvider
+
+<h3>LoginUser</h3>
+
+<EditForm Model="_user" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="_user.Email"/>
+    </div>
+    <div class="mb-3">
+        <label for="password">Password</label>
+        <InputText id="password" @bind-Value="_user.Password" type="password"/>
+    </div>
+    <ValidationSummary />
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+<div class="text-danger">
+    <span>@_errorMessage</span>
+</div>
+@code {
+
+    UserLoginDto _user = new();
+    string _errorMessage = string.Empty;
+
+    async Task HandleSubmit()
+    {
+        var result = await _authService.LoginAsync(_user);
+
+        if (result.Success)
+        {
+            _errorMessage = string.Empty;
+
+            _sessionStorage.SetItem("authToken", result.Data);
+            await _authenticationStateProvider.GetAuthenticationStateAsync();
+            _navigationManager.NavigateTo("");
+        }
+        else
+        {
+            _errorMessage = result.Message;
+        }
+        
+    }
+
+}

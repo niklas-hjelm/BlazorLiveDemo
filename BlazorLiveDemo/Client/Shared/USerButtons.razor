@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject ISessionStorageService SessionStorageService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+<div class="btn-group m-2">
+    <AuthorizeView>
+        <Authorized>
+            <button class="btn btn-danger" @onclick="Logout">Logout</button>
+        </Authorized>
+        <NotAuthorized>
+            <a href="login" class="btn btn-dark">Login</a>
+            <a href="register" class="btn btn-dark">Register</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+
+    private async Task Logout()
+    {
+        SessionStorageService.RemoveItem("authToken");
+        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("");
+    }
+
+}

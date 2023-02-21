@@ -32,9 +32,13 @@ public partial class Chat : ComponentBase
         await base.OnInitializedAsync();
     }
 
-    private void SendMessage()
+    private async Task SendMessage()
     {
-        CurrentMessage.TimeSent = DateTime.Now;
+        var user = await _authenticationStateProvider.GetAuthenticationStateAsync();
+
+        CurrentMessage.Name = user.User.Identity.Name;
+
+        CurrentMessage.TimeSent = DateTime.UtcNow;
         _chatConnection.SendAsync("SendMessage", CurrentMessage);
         CurrentMessage = new ChatMessageDto();
     }

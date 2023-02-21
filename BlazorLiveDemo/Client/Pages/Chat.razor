@@ -1,15 +1,14 @@
 ﻿@page "/chat"
+@using Microsoft.AspNetCore.Authorization
 
+@inject AuthenticationStateProvider _authenticationStateProvider
 @inject NavigationManager _navigationManager
 @inject HttpClient _client
+@attribute [Authorize]
 
 <h3>Chat</h3>
 
 <EditForm Model="CurrentMessage" OnSubmit="SendMessage">
-    <div>
-        <label>Name</label>
-        <InputText class="form-control" @bind-Value="CurrentMessage.Name"></InputText>
-    </div>
     <div>
         <label>Message</label>
         <InputTextArea class="form-control" @bind-Value="CurrentMessage.Message"></InputTextArea>
@@ -19,12 +18,11 @@
 
 <hr class="mt-1 mb-1"/>
 
-<ul class="container">
-    <Virtualize Items="AllMessages.OrderByDescending(m=>m.TimeSent).ToList()" Context="message">
-        <li class="col card border-2">
-            <label class="card-header bg-dark text-info text-start">@message.Name</label>
-            <p class="card-body mb-0 bg-secondary text-warning text-center">@message.Message</p>
-            <label class="card-footer bg-dark text-info text-end">@message.TimeSent.ToString("HH:mm")</label>
+<ul class="container list-unstyled">
+    <Virtualize Items="AllMessages.OrderByDescending(m=>m.TimeSent.ToLocalTime()).ToList()" Context="message">
+        <li class="p-2 mb-1">
+            <label class="lh-sm"> <span class="oi oi-person"></span>@message.Name - @message.TimeSent.ToLocalTime().ToString("HH:mm")</label>
+            <h4 class="pinkaroo text-light rounded-3 p-2 mb-1">@message.Message</h4>
         </li>
     </Virtualize>
 </ul>

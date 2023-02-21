@@ -1,5 +1,5 @@
 ﻿using BlazorLiveDemo.Server.DataAccess;
-using BlazorLiveDemo.Shared;
+using BlazorLiveDemo.Shared.DTOs;
 using Microsoft.AspNetCore.SignalR;
 
 namespace BlazorLiveDemo.Server.Hubs;

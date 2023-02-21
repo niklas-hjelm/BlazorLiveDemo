@@ -1,5 +1,5 @@
 ﻿using BlazorLiveDemo.Server.DataAccess.Models;
-using BlazorLiveDemo.Shared;
+using BlazorLiveDemo.Shared.DTOs;
 using MongoDB.Driver;
 
 namespace BlazorLiveDemo.Server.DataAccess;

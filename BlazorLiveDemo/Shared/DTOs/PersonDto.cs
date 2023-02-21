@@ -1,4 +1,4 @@
-﻿namespace BlazorLiveDemo.Shared;
+﻿namespace BlazorLiveDemo.Shared.DTOs;
 public record PersonDto
 {
     public string Name { get; set; }

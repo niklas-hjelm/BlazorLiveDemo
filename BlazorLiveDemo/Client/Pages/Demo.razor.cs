@@ -1,4 +1,4 @@
-﻿using BlazorLiveDemo.Shared;
+﻿using BlazorLiveDemo.Shared.DTOs;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 

@@ -1,4 +1,4 @@
-﻿namespace BlazorLiveDemo.Shared;
+﻿namespace BlazorLiveDemo.Shared.DTOs;
 
 public class ChatMessageDto
 {

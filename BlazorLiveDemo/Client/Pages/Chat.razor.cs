@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using BlazorLiveDemo.Shared;
+using BlazorLiveDemo.Shared.DTOs;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 

@@ -1,8 +1,9 @@
 using BlazorLiveDemo.Server.DataAccess;
+using BlazorLiveDemo.Server.Extensions;
 using BlazorLiveDemo.Server.Hubs;
 using BlazorLiveDemo.Server.Services;
 using BlazorLiveDemo.Server.Services.Interfaces;
-using BlazorLiveDemo.Shared;
+using BlazorLiveDemo.Shared.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,21 +47,14 @@ app.UseRouting();
 
 app.MapRazorPages();
 
-app.MapGet("/allPeople", async (IRepository<PersonDto> repo) =>
-{
-    return Results.Ok(await repo.GetAllAsync());
-});
-
-app.MapPost("/addPerson", async (IRepository<PersonDto> repo, PersonDto person) =>
-{
-    await repo.AddAsync(person);
-    return Results.Ok("Added person");
-});
+app.MapPersonEndpoints();
 
 app.MapGet("/getAllChat", async (IRepository<ChatMessageDto> repo) =>
 {
     return Results.Ok(await repo.GetAllAsync());
 });
+
+app.MapAuthEndpoints();
 
 app.MapHub<ChatHub>("/hubs/ChatHub");
 

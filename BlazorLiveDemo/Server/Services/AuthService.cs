@@ -55,7 +55,6 @@ public class AuthService : IAuthService
                 .ToLower()
                 .Equals(email.ToLower()));
     }
-
     public async Task<ServiceResponse<string>> Login(string email, string password)
     {
         var response = new ServiceResponse<string>();

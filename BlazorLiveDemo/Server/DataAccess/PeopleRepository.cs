@@ -1,5 +1,5 @@
 ﻿using BlazorLiveDemo.Server.DataAccess.Models;
-using BlazorLiveDemo.Shared;
+using BlazorLiveDemo.Shared.DTOs;
 
 namespace BlazorLiveDemo.Server.DataAccess;
 
